@@ -60,7 +60,3 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-// function setCenter(lat, lng){
-//     gMap.setCenter(new google.maps.LatLng(lat, lng))
-// }
