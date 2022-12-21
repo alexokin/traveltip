@@ -9,9 +9,12 @@ export const placeService = {
     get,
     remove,
     save,
+    getEmptyPlace,
+    query,
+    setnewplace,
 }
 function query() {
-    return storageService.query(PET_KEY)
+    return storageService.query(PLACE_KEY)
 }
 function get(placeId) {
     return storageService.get(PLACE_KEY , placeId)
@@ -31,9 +34,12 @@ function save(place) {
 
 
 // CREATE//
-
-function getEmptyPlace(name = '',lat,lng,createdAt,updatedAt) {
-    return { id: '', name,lat,lng,createdAt,updatedAt}
+function setnewplace(name = '',lat,lng){
+    const newPlace= {name,lat,lng}
+    save(newPlace)
+}
+function getEmptyPlace(name = '',lat,lng) {
+    return {name,lat,lng}
 }
 
 function _createPlaces() {
@@ -46,23 +52,24 @@ function _createPlaces() {
 
 function _createDemoPlaces() {
     const placeNames = ['Greatplace', 'Neveragain']
-    const placecords = ['{32.047104,34.832384}','{32.047201,34.832581}']
+    const placecords = [{lat:32.047104,lng:34.832384},{lat:32.047201,lng:34.832581}]
 
-    const places = placeNames.map((placeName, i) => {
-        const place = _createPlace(placeName)
-        place.placecords = placecords[i]
-        return place
+    const places = placeNames.map((place,i) => {
+        const demoPlace = _createPlace(place)
+        demoPlace.lat=placecords[i].lat
+        demoPlace.lng=placecords[i].lng
+        return demoPlace
     })
 
     utilService.saveToStorage(PLACE_KEY, places)
 }
 
-function _createPlace(name) {
+function _createPlace(name,lat,lng) {
     const place = getEmptyPlace()
     place.id = utilService.makeId()
-    place.name = name || utilService.randomPetName(pet.type)
-    // place.lat = utilService.randomLat()
-    // place.lng = utilService.randomLng()
+    place.name = name
+    place.lat = lat
+    place.lng = lng
     // place.createdAt = utilService.randomPastTime()
     // place.updatedAt = utilService.randomPastTime()
     // place.weather = utilService.

@@ -1,12 +1,14 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-import {placeService } from './services/place.service.js'
+import { placeService } from './services/place.service.js'
 
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onRemovePlace = onRemovePlace
+
 
 function onInit() {
     mapService.initMap()
@@ -15,15 +17,10 @@ function onInit() {
         })
         .catch(() => console.log('Error: cannot init map'))
 
-
-    
+    placeService.query()
+        .then(placesToRender)
 }
 
-placeService.query()
-    .then(places => {
-        console.log('places', places)
-        return pets
-    })
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
@@ -57,7 +54,25 @@ function onGetUserPos() {
             console.log('err!!!', err)
         })
 }
-function onPanTo() {
+function onPanTo(lat,lng) {
     console.log('Panning the Map')
-    mapService.panTo(35.6895, 139.6917)
+    mapService.panTo(lat, lng)
+}
+
+function onRemovePlace(id){
+    placeService.remove(id)
+}
+
+function placesToRender(locations) {
+    console.log(locations);
+    const strHTML = locations.map(location => {
+        return `<tr data-list-id="${location.id}">
+        <td>${location.name}</td>
+        <td><span class="btn-del-list" onClick="onPanTo(${location.lat},${location.lng})">GO</span></td>
+        <td><span class="btn-del-list" onclick="onRemovePlace('${location.id}')">✕</span></td>
+        </tr>
+        `
+    })
+    const elLocationsTable = document.querySelector('.loc-table')
+    elLocationsTable.innerHTML = strHTML.join('')
 }

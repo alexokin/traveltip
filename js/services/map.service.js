@@ -1,7 +1,9 @@
+import { placeService } from './place.service.js'
+
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
 }
 
 // Var that is used throughout this Module (not global)
@@ -23,7 +25,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 const locationName = prompt("Please enter location name")
                 const lat = event.latLng.lat()
                 const lng = event.latLng.lng()
-                addMapLocation(locationName, lat, lng)
+                placeService.setnewplace(locationName, lat, lng)
             })
         })
 
@@ -58,3 +60,7 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+// function setCenter(lat, lng){
+//     gMap.setCenter(new google.maps.LatLng(lat, lng))
+// }
