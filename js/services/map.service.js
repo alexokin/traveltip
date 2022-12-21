@@ -6,8 +6,7 @@ export const mapService = {
 
 // Var that is used throughout this Module (not global)
 var gMap
-GEO_KEY = 'AIzaSyCCXR5LWk3ZODvwZVFokU7WhLEXR2aWDag'
-
+// const GEO_KEY = 'AIzaSyCCXR5LWk3ZODvwZVFokU7WhLEXR2aWDag'
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')
     return _connectGoogleApi()
@@ -17,10 +16,19 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
+
             })
             console.log('Map!', gMap)
+            gMap.addListener("click", (event) => {
+                const locationName = prompt("Please enter location name")
+                const lat = event.latLng.lat()
+                const lng = event.latLng.lng()
+                addMapLocation(locationName, lat, lng)
+            })
         })
+
 }
+
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({

@@ -14,7 +14,16 @@ function onInit() {
             console.log('Map is ready')
         })
         .catch(() => console.log('Error: cannot init map'))
+
+
+    
 }
+
+placeService.query()
+    .then(places => {
+        console.log('places', places)
+        return pets
+    })
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {

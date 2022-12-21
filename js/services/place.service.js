@@ -3,13 +3,16 @@ import { utilService } from './util.service.js'
 
 
 const PLACE_KEY = 'placeDB'
+_createPlaces()
 
 export const placeService = {
     get,
     remove,
     save,
 }
-
+function query() {
+    return storageService.query(PET_KEY)
+}
 function get(placeId) {
     return storageService.get(PLACE_KEY , placeId)
 }
@@ -29,14 +32,14 @@ function save(place) {
 
 // CREATE//
 
-function getEmptyPlace(name = '') {
+function getEmptyPlace(name = '',lat,lng,createdAt,updatedAt) {
     return { id: '', name,lat,lng,createdAt,updatedAt}
 }
 
 function _createPlaces() {
-    let pets = utilService.loadFromStorage(PET_KEY)
-    if (!pets || !pets.length) {
-        _createDemoPets()
+    let places = utilService.loadFromStorage(PLACE_KEY)
+    if (!places || !places.length) {
+        _createDemoPlaces()
     }
 }
 
@@ -51,17 +54,17 @@ function _createDemoPlaces() {
         return place
     })
 
-    utilService.saveToStorage(PET_KEY, pets)
+    utilService.saveToStorage(PLACE_KEY, places)
 }
 
 function _createPlace(name) {
     const place = getEmptyPlace()
     place.id = utilService.makeId()
     place.name = name || utilService.randomPetName(pet.type)
-    place.lat = utilService.randomLat()
-    place.lng = utilService.randomLng()
-    place.createdAt = utilService.randomPastTime()
-    place.updatedAt = utilService.randomPastTime()
+    // place.lat = utilService.randomLat()
+    // place.lng = utilService.randomLng()
+    // place.createdAt = utilService.randomPastTime()
+    // place.updatedAt = utilService.randomPastTime()
     // place.weather = utilService.
     return place
 }

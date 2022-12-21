@@ -37,9 +37,6 @@ function getRandomIntInclusive(min, max) {
 function randomPlaceName() {
     return gPetNames[parseInt(Math.random() * gPetNames.length)]
 }
-function randomPetType() {
-    return gPetTypes[parseInt(Math.random() * gPetTypes.length)]
-}
 
 function randomPastTime() {
     const HOUR = 1000 * 60 * 60
