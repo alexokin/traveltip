@@ -19,11 +19,11 @@ function onInit() {
     
 }
 
-placeService.query()
-    .then(places => {
-        console.log('places', places)
-        return pets
-    })
+// placeService.query()
+//     .then(places => {
+//         console.log('places', places)
+//         return pets
+//     })
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {

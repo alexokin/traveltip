@@ -1,3 +1,5 @@
+import { placeService } from "./place.service.js"
+
 export const mapService = {
     initMap,
     addMarker,
@@ -23,7 +25,8 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 const locationName = prompt("Please enter location name")
                 const lat = event.latLng.lat()
                 const lng = event.latLng.lng()
-                addMapLocation(locationName, lat, lng)
+                console.log(lat,lng);
+                placeService.getEmptyPlace(locationName, lat, lng)
             })
         })
 
