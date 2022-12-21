@@ -6,6 +6,7 @@ export const mapService = {
 
 // Var that is used throughout this Module (not global)
 var gMap
+GEO_KEY = 'AIzaSyCCXR5LWk3ZODvwZVFokU7WhLEXR2aWDag'
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')
