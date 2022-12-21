@@ -39,6 +39,7 @@ function setnewplace(name = '',lat,lng){
     const newPlace= {name,lat,lng}
     save(newPlace)
 }
+
 function getEmptyPlace(name = '',lat,lng) {
     return {name,lat,lng}
 }

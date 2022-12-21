@@ -5,7 +5,6 @@ import { placeService } from './services/place.service.js'
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
-window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onRemovePlace = onRemovePlace
 
@@ -35,13 +34,13 @@ function onAddMarker() {
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
 }
 
-function onGetLocs() {
-    locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-        })
-}
+// function onGetLocs() {
+//     locService.getLocs()
+//         .then(locs => {
+//             console.log('Locations:', locs)
+//             document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+//         })
+// }
 
 function onGetUserPos() {
     getPosition()
@@ -61,6 +60,7 @@ function onPanTo(lat,lng) {
 
 function onRemovePlace(id){
     placeService.remove(id)
+    .then(onInit)
 }
 
 function placesToRender(locations) {
