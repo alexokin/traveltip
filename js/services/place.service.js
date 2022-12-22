@@ -1,10 +1,5 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
-import { mapService } from './map.service.js'
-
-
-const PLACE_KEY = 'placeDB'
-_createPlaces()
 
 export const placeService = {
     get,
@@ -12,11 +7,17 @@ export const placeService = {
     save,
     getEmptyPlace,
     query,
-    setnewplace,
+    setNewPlace,
 }
+const PLACE_KEY = 'placeDB'
+_createPlaces()
+
+// Gets,remove,save to storage //
+
 function query() {
     return storageService.query(PLACE_KEY)
 }
+
 function get(placeId) {
     return storageService.get(PLACE_KEY , placeId)
 }
@@ -33,11 +34,11 @@ function save(place) {
     }
 }
 
+// Create//
 
-// CREATE//
-function setnewplace(name = '',lat,lng){
+function setNewPlace(name = '',lat,lng){
     const newPlace= {name,lat,lng}
-    save(newPlace)
+    return save(newPlace)
 }
 
 function getEmptyPlace(name = '',lat,lng) {
@@ -50,7 +51,6 @@ function _createPlaces() {
         _createDemoPlaces()
     }
 }
-
 
 function _createDemoPlaces() {
     const placeNames = ['Greatplace', 'Neveragain']

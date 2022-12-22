@@ -1,42 +1,38 @@
-import { placeService } from './place.service.js'
-
 export const mapService = {
     initMap,
     addMarker,
     panTo,
+    getMap,
 }
 
 // Var that is used throughout this Module (not global)
 var gMap
 // const GEO_KEY = 'AIzaSyCCXR5LWk3ZODvwZVFokU7WhLEXR2aWDag'
-function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap')
+
+function initMap(lat = 32.663000, lng = 35.020000) {
     return _connectGoogleApi()
         .then(() => {
-            console.log('google available')
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
                 center: { lat, lng },
-                zoom: 15
-
+                zoom: 12
             })
-            console.log('Map!', gMap)
-            gMap.addListener("click", (event) => {
-                const locationName = prompt("Please enter location name")
-                const lat = event.latLng.lat()
-                const lng = event.latLng.lng()
-                placeService.setnewplace(locationName, lat, lng)
+            var marker = new google.maps.Marker({
+                position: { lat, lng },
+                title: 'first location!'
             })
         })
-
 }
 
+function getMap() {
+    return gMap
+}
 
-function addMarker(loc) {
+function addMarker(name,loc) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title: `${name}`
     })
     return marker
 }
@@ -45,7 +41,6 @@ function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
     gMap.panTo(laLatLng)
 }
-
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
